@@ -5,32 +5,300 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ermine projects</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+	
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+
+
     <div class="container">
-        <img src="{{ url_for('static', filename='erminelogo.png') }}" alt="Ermine Logo" class="logo">
-        <div class="links">
-            <a href="http://stimmungskompass.ermine.at" class="btn" style="background-color: #FF7043;">Stimmungskompass</a>
-            <p>An online application designed for towns to engage residents in participatory planning.</p>
-
-            <a href="http://otterguessr.ermine.at" class="btn" style="background-color: #59CE6C;">Otterguessr</a>
-            <p>A free geoguessing game, with local / online multiplayer, custom game editor, custom map import, and more.</p>
-
-            <a href="http://songloops.ermine.at" class="btn" style="background-color: #B71C1C;">Songloops</a>
-            <p>An online interface for pymusiclooper, creates seamlessly loopable versions of songs.</p>
-
-            <a href="http://soundscapes.ermine.at" class="btn" style="background-color: #1565C0;">Soundscapes</a>
-            <p>An organized collection of my own soundscapes.</p>
-			
-            <a href="http://boardgames.ermine.at" class="btn" style="background-color: #4CAF50;">Board games</a>
-            <p>Board games crafted with love by me and my boyfriend.</p>
-
-            <a href="http://art.ermine.at" class="btn" style="background-color: #4E342E;">Art</a>
-            <p>A showcase of my art, featuring graphite fantasy pieces with industrial themes and highly stylized maps of public transport.</p>
-			
-			
+        <div class="header">
+            <img src="{{ url_for('static', filename='erminelogo.png') }}" alt="Ermine Logo" class="logo">
         </div>
+		
+
+
+<div class="intro-text">
+    <h2>In simplicity is beauty.</h2>
+<button id="skills-btn" class="btn skills" style="display: block; margin: 0 auto; width: max-content;">Skills</button>
+</div>
+
+<div id="skills-section" class="skills-section">
+    <div class="skills-category">
+        <h3 class="skills-header">Tech:</h3>
+        <ul>
+            <li>General tech support, HW / SW</li>
+            <li>Code - Python, JS, HTML5, CSS, SQL, and many related frameworks and technologies</li>
+            <li>Phone repair</li>
+            <li>Computer assembly</li>
+        </ul>
     </div>
+
+    <div class="skills-category">
+        <h3 class="skills-header">Design:</h3>
+        <ul>
+            <li>Graphical design - extensive PS experience + Illustrator + Indesign</li>
+            <li>Poster / marketing material design</li>
+            <li>Book design</li>
+            <li>AutoCAD and similar CAD programs</li>
+        </ul>
+    </div>
+
+    <div class="skills-category">
+        <h3 class="skills-header">Mechanical:</h3>
+        <ul>
+            <li>E-Scooter complete repair & assembly</li>
+            <li>Bicycle complete repair & assembly</li>
+        </ul>
+    </div>
+
+    <div class="skills-category">
+        <h3 class="skills-header">Hobby-grade:</h3>
+        <ul>
+            <li>Board game design - from start to finish, including game logic, graphical assets, printing and game piece creation</li>
+            <li>MIG/MAG/WIG welding</li>
+            <li>Lasercutting</li>
+        </ul>
+    </div>
+
+    <div class="skills-category">
+        <h3 class="skills-header">Mental:</h3>
+        <ul>
+            <li>I'm passionate about everything I do.</li>
+            <li>I learn and work best by starting in the middle.</li>
+            <li>Fast worker.</li>
+        </ul>
+    </div>
+</div>
+
+		
+<div id="project-grid" class="project-grid">
+
+<div class="project">
+	<a href="http://stimmungskompass.ermine.at" class="btn stimmungskompass">Stimmungskompass</a>
+	<p>An online application designed for towns to engage residents in participatory planning.</p>
+</div>
+
+<div class="project">
+    <a href="http://stravaexporter.ermine.at" class="btn otterguessr">Stravaexporter</a>
+    <p>Export your Strava activities to a visually compelling map. Poster creation available.</p>
+</div>
+
+<div class="project">
+    <a href="http://otterguessr.ermine.at" class="btn otterguessr">Otterguessr</a>
+    <p>A free geoguessing game, with local / online multiplayer, custom game editor, custom map import, and more.</p>
+</div>
+
+<div class="project">
+    <a href="http://songloops.ermine.at" class="btn songloops">Songloops</a>
+    <p>An online interface for pymusiclooper, creates seamlessly loopable versions of songs.</p>
+</div>
+
+<div class="project">
+    <a href="http://soundscapes.ermine.at" class="btn soundscapes">Soundscapes</a>
+    <p>An organized collection of my own soundscapes.</p>
+</div>
+
+<div class="project">
+    <a href="http://boardgames.ermine.at" class="btn boardgames">Board games</a>
+    <p>Board games crafted with love by me and my boyfriend.</p>
+</div>
+
+<div class="project">
+    <a href="http://art.ermine.at" class="btn art">Digital Art</a>
+    <p>A showcase of my art, featuring graphite fantasy pieces with industrial themes and highly stylized maps of public transport.</p>
+</div>
+
+<div class="project">
+    <a href="http://graphiteart.ermine.at" class="btn art">Graphite Art</a>
+    <p>A showcase of my art, featuring graphite fantasy pieces with industrial themes and highly stylized maps of public transport.</p>
+</div>
+
+</div>
+
+<div id="notification-text" class="notification-text">Click here to view the full non-embedded version!</div>
+<iframe id="project-iframe" style="display: none; width: 100%; height: 100vh; border: none; overflow: hidden;" frameborder="0"></iframe>
+
+</div>
+
+<script>
+    const container = document.querySelector('.container');
+    const projectGrid = document.getElementById('project-grid');
+    const projectIframe = document.getElementById('project-iframe');
+    const bodyStyle = document.body.style;
+    const header = document.querySelector('.header');
+    const logo = header.querySelector('img');
+
+    const projectData = {
+        'Stimmungskompass': { bgImage: 'static/bg_stimmungskompass.png', url: 'http://stimmungskompass.ermine.at' },
+        'Otterguessr': { bgImage: 'static/bg_otterguessr.png', url: 'http://otterguessr.ermine.at' },
+        'Songloops': { bgImage: 'static/bg_songloops.png', url: 'http://songloops.ermine.at' },
+        'Soundscapes': { bgImage: 'static/bg_soundscapes.png', url: 'http://soundscapes.ermine.at' },
+        'Board games': { bgImage: 'static/bg_boardgames.png', url: 'http://boardgames.ermine.at' },
+        'Digital Art': { bgImage: 'static/bg_art.png', url: 'http://art.ermine.at' },
+        'Graphite Art': { bgImage: 'static/bg_graphiteart.png', url: 'http://art.ermine.at' }
+    };
+
+    function isMobileDevice() {
+        return (window.innerWidth <= 768);
+    }
+
+    function movePopup(event, popup) {
+        popup.style.top = (event.pageY + 10) + 'px';
+        popup.style.left = (event.pageX + 10) + 'px';
+    }
+
+    let notification; // Global reference to the notification
+
+    function createNotification(projectName) {
+        notification = document.createElement('div');
+        notification.textContent = 'Click for the full version!';
+        notification.style.position = 'absolute';
+        notification.style.top = '120px';
+        notification.style.left = '50%';
+        notification.style.transform = 'translateX(-50%)';
+        notification.style.backgroundColor = 'white';
+        notification.style.color = 'black';
+        notification.style.padding = '10px';
+        notification.style.borderRadius = '30px';
+        notification.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)';
+        notification.style.border = '1px solid black';
+        notification.style.cursor = 'pointer';
+        notification.style.zIndex = '1002';
+        notification.style.opacity = '0';
+        notification.style.transition = 'opacity 0.5s';
+
+        notification.addEventListener('click', () => {
+            window.open(projectData[projectName].url, '_blank');
+            notification.remove();
+            notification = null; // Reset the global notification reference
+        });
+
+        setTimeout(() => {
+            notification.style.opacity = '1';
+        }, 100);
+
+        return notification;
+    }
+
+    function addNotificationToProject(projectName) {
+        const existingNotification = container.querySelector('.notification');
+        if (!existingNotification) {
+            createNotification(projectName);
+            container.appendChild(notification); // Add new notification
+
+            setTimeout(() => {
+                if(notification){
+                    notification.remove();
+                    notification = null; // Reset the global notification reference
+                }
+            }, 5000); // Auto-hide after 5 seconds
+        }
+    }
+
+    document.querySelectorAll('.project').forEach(project => {
+        const popup = document.createElement('img');
+        popup.style.position = 'absolute';
+        popup.style.maxWidth = '500px';
+        popup.style.display = 'none';
+        popup.style.pointerEvents = 'none';
+        popup.style.zIndex = '1001';
+        document.body.appendChild(popup);
+
+        project.addEventListener('mouseenter', (event) => {
+            if (!isMobileDevice()) {
+                const imageName = projectData[project.querySelector('a').textContent.trim()]?.bgImage;
+                if (imageName) {
+                    popup.src = imageName;
+                    popup.style.display = 'block';
+                    movePopup(event, popup);
+                }
+            }
+        });
+
+        project.addEventListener('mousemove', (event) => {
+            if (!isMobileDevice()) {
+                movePopup(event, popup);
+            }
+        });
+
+        project.addEventListener('mouseleave', () => {
+            popup.style.display = 'none';
+        });
+
+        project.addEventListener('click', (event) => {
+            event.preventDefault();
+            popup.style.display = 'none';
+
+            const projectName = project.querySelector('a').textContent.trim();
+            const { bgColor, bgImage, textColor } = projectData[projectName] || {};
+
+            const topBar = document.createElement('div');
+            topBar.classList.add('top-bar');
+            topBar.style.backgroundColor = bgColor;
+
+            if (logo) {
+                const logoClone = logo.cloneNode(true);
+                logoClone.style.maxWidth = '80px';
+                logoClone.style.maxHeight = '80px';
+                topBar.appendChild(logoClone);
+
+                logoClone.addEventListener('click', () => {
+                    header.style.display = 'block';
+                    container.removeChild(topBar);
+                    projectGrid.style.display = 'grid';
+                    projectIframe.style.display = 'none';
+                    bodyStyle.paddingTop = '0';
+                    bodyStyle.overflow = 'auto';
+                    container.style.maxWidth = '1200px';
+                });
+
+                header.style.display = 'none';
+            }
+
+            document.querySelectorAll('.project').forEach(p => {
+                const projectLink = p.querySelector('a').cloneNode(true);
+                projectLink.classList.remove('btn');
+                projectLink.classList.add('top-bar-link');
+                projectLink.removeAttribute('href');
+                projectLink.addEventListener('click', () => {
+                    projectIframe.src = p.querySelector('a').href;
+                    addNotificationToProject(p.querySelector('a').textContent.trim());
+                });
+                topBar.appendChild(projectLink);
+            });
+
+            container.insertBefore(topBar, projectGrid);
+            projectGrid.style.display = 'none';
+
+            container.style.maxWidth = 'none';
+            container.style.width = '100%';
+            container.style.padding = '0';
+            projectIframe.src = event.currentTarget.querySelector('a').href;
+            projectIframe.style.display = 'block';
+            projectIframe.style.width = '90%';
+            projectIframe.style.height = `calc(100vh - ${topBar.offsetHeight + 20}px - 20px)`;
+            projectIframe.style.position = 'absolute';
+            projectIframe.style.top = `calc(${topBar.offsetHeight + 20}px)`;
+            projectIframe.style.left = '5%';
+            projectIframe.style.borderRadius = '30px';
+            projectIframe.style.marginBottom = '10px';
+
+            bodyStyle.margin = '0';
+            bodyStyle.paddingTop = topBar.offsetHeight + 'px';
+            bodyStyle.overflow = 'hidden';
+
+            addNotificationToProject(projectName); // Add notification for specific projects
+        });
+    });
+
+    document.getElementById('skills-btn').addEventListener('click', function() {
+        var skillsSection = document.getElementById('skills-section');
+        skillsSection.style.display = skillsSection.style.display === 'block' ? 'none' : 'block';
+    });
+</script>
+
+
+
 </body>
 </html>

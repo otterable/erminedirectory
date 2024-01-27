@@ -1,43 +1,410 @@
 body {
-    font-family: 'Roboto', sans-serif;
-    background-color: black;
-    color: white;
+    font-family: MaisonNeue,Segoe UI,Helvetica Neue,-apple-system,system-ui,BlinkMacSystemFont,Roboto,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+    color: #f5f5f5;
+	font-weight: bold;
+	background: #000000;
     text-align: center;
+    margin: 0;
+    padding: 0;
+        overflow: auto !important;
+    transition: background-image 0.5s ease-in-out;
+	    padding-bottom: 10px; /* Add padding to the bottom */
+
 }
 
 .container {
-    width: 80%;
+    max-width: 1200px;
     margin: 0 auto;
-    padding-top: 20px;
+    padding: 0; /* Remove padding */
+	    margin-bottom: 10px; /* Add margin to the bottom of the container */
+
+}
+
+.header {
+    margin-bottom: 50px;
+}
+
+.fade-out {
+    opacity: 0.3;
+    transition: opacity 0.5s ease;
+}
+
+
+.top-bar img.logo {
+    max-width: 60px;
+    margin-right: 20px; /* Adjust the space between logo and text links */
+    align-self: center; /* Aligns the logo itself if needed */
+}
+
+.top-bar .top-bar-link, .top-bar .project a {
+    align-self: center; /* Aligns the text links if needed */
+}
+
+.top-bar {
+    background-color: transparent;
+    height: 80px;
+    width: 90%;
+    border-radius: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Vertically centers the items in the flex container */
+    padding: 0 20px;
+    box-sizing: border-box;
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    margin-bottom: 10px;
+}
+
+#project-iframe::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+}
+
+#project-iframe::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Track color */
+}
+
+#project-iframe::-webkit-scrollbar-thumb {
+    background: #000000; /* Thumb color */
+    border-radius: 10px; /* Rounded corners for the thumb */
+}
+
+#project-iframe::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Thumb color on hover */
+}
+
+.top-bar .project a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s, text-shadow 0.3s; /* Transition for color and text-shadow */
+    cursor: pointer; /* Change cursor to indicate clickable */
+}
+
+/* Adjust hover effect to change color instead of popping out */
+.top-bar .project a:hover {
+    color: #ddd; /* Lighter color on hover */
+    text-decoration: underline; /* Underline on hover */
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.6); /* Glow effect */
+    text-decoration-thickness: 2px; /* Thickness of underline */
+    text-decoration-style: solid; /* Style of underline */
+    text-underline-offset: 3px; /* Offset of underline */
+    text-decoration-color: #ddd; /* Color of underline */
+}
+
+.top-bar .top-bar-link {
+    color: white; /* White text color */
+    text-decoration: none;
+    font-size: 1rem;
+	background-color: transparent;
+    cursor: pointer;
+    transition: color 0.3s, text-shadow 0.3s; /* Transition for color and text-shadow */
+}
+
+.top-bar .top-bar-link:hover {
+    color: white; /* Keep text color white on hover */
+    text-decoration: underline; /* Underline on hover */
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.6); /* White glow effect */
+    text-decoration-thickness: 2px; /* Thickness of underline */
+    text-underline-offset: 3px; /* Offset of underline */
+    text-decoration-color: white; /* White color of underline */
+}
+
+
+
+.top-bar a[href="/"]:hover::after {
+    content: none;
+}
+/* Underline effect for links that do not contain the logo */
+.top-bar a:not(:has(> .logo))::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 100%;
+    height: 2px;
+    background-color: white;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s;
+}
+
+/* Additional styles for .logo to ensure it fits well in the top bar */
+.top-bar-logo {
+    max-width: 30px; // Adjust the size to fit the top bar
+    max-height: 80px;
+    margin-right: 20px; // Add space between the logo and the next element
+}
+
+.top-bar a:hover {
+    color: #a8c0ff; /* Change color on hover */
+    text-shadow: 0px 0px 8px rgba(255, 255, 255, 0.7); /* Add text shadow on hover */
+}
+
+.iframe-container {
+    overflow: hidden; /* Hide overflow, including the scrollbar */
+    width: 100%; /* Set to the desired width */
+    height: 100vh; /* Set to the desired height */
+    position: relative; /* Required for absolute positioning of iframe */
+}
+
+#project-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100.5%; /* Slightly wider than the container */
+    height: 100.5%; /* Slightly taller than the container */
+	outline: 3px solid white !important;
+}
+
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge, and Firefox */
+body {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+body::-webkit-scrollbar, #project-iframe::-webkit-scrollbar {
+    display: none  !important;
+}
+
+/* Hide scrollbar for IE, Edge, and Firefox */
+body, #project-iframe {
+    -ms-overflow-style: none  !important;  /* IE and Edge */
+    scrollbar-width: none !important;  /* Firefox */
+}
+
+.top-bar a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 100%;
+    height: 2px;
+    background-color: white;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s;
+}
+
+/* Hover effect for buttons inside links in the top bar */
+
+
+/* Underline effect for links that do not contain buttons */
+.top-bar a:not(:has(> button))::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 100%;
+    height: 2px;
+    background-color: white;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s;
+}
+
+
+/* Hover effect for links in the top bar */
+.top-bar a:not(:has(button)):hover::after {
+    transform: scaleX(1); /* Show the underscore on hover */
+    transform-origin: left;
+}
+
+.top-bar a {
+    color: white;
+    text-decoration: none;
+    margin-right: 20px; /* Add spacing between links */
+    font-size: 18px; /* Increase text size */
+    font-weight: bold; /* Make text bold */
+    position: relative;
+    transition: color 0.3s ease, text-shadow 0.3s ease; /* Transition for color and text shadow */
 }
 
 .logo {
-    max-width: 200px;
-    margin-bottom: 30px;
+    max-width: 100px;
 }
 
-.btn {
-    display: inline-block;
+h1 {
+    font-size: 2em;
+    color: #fff; /* Changed color for better visibility */
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.project {
+    background-color: #0a0a0a;
     border-radius: 30px;
-    padding: 10px;
-    color: white;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.project:hover {
+    outline: 2px solid white; /* Add a solid white border on hover */
+}
+
+
+.btn {
+    display: block;
+    border-radius: 5px;
+    padding: 15px;
+    color: black;
     text-decoration: none;
     margin-bottom: 10px;
     transition: all 0.3s ease;
-    font-weight: bold; /* Make text bold */
+    font-weight: bold;
+    text-align: center;
+	border:none;
+	border-radius: 30px;
+    background-color: #003056; /* Updated button color */
+}
+
+.stimmungskompass, .otterguessr, .songloops, .soundscapes, .boardgames, .art, .skills {
+    background-color: #ffffff; /* Harmonize project button colors */
 }
 
 .btn:hover {
-    transform: scale(1.1);
-    filter: brightness(110%);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 .btn:active {
-    background-color: #333; /* Change color on click */
+    background-color: #000000; /* Darker shade for button press effect */
+	color:white;
+	outline: 1px solid white;
 }
 
+
+.skills-section {
+    display: none;
+    background-color: #0a0a0a;
+    color: white;
+    padding: 20px;
+    text-align: left;
+	margin-top: 20px;
+	border-radius: 30px;
+    outline: 5px solid #fff; /* Adds a top border */
+}
+
+.skills-category {
+    margin-bottom: 20px;
+}
+
+.skills-header {
+    font-size: 1.5em;
+    color: #eae2b7; /* Light blue for a modern look */
+    border-bottom: 1px solid #fff; /* Underline for header */
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.skills-section ul {
+    list-style: none; /* Removes bullet points */
+    padding-left: 0; /* Aligns text with the header */
+}
+
+.skills-section li {
+    padding-left: 15px; /* Indent for list items */
+    position: relative;
+}
+
+.skills-section li::before {
+    content: '•'; /* Custom bullet point */
+    color: #eae2b7; /* Light blue bullet points */
+    position: absolute;
+    left: 0;
+}
+
+.notification-text {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    color: black;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 1rem;
+    z-index: 2000;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+
+
 @media (max-width: 768px) {
-    .container {
-        width: 95%;
+    body {
+        overflow: auto !important;
+    }
+	
+
+    .hamburger-menu {
+        display: none; /* Initially hidden */
+    }
+
+    .top-bar.active .hamburger-menu {
+        display: flex; /* Show when top bar is active */
+    }
+	
+	
+	
+	.skills-section {
+        width: 90%; /* Set width to 95% of the screen width */
+		margin-top: 20px !important;
+        margin: 0 auto; /* Center the section */
+        padding: 10px; /* Adjust padding for smaller screens */
+    }
+	
+
+    /* Hamburger menu style */
+    .hamburger-menu div {
+        width: 2rem;
+        height: 0.25rem;
+        background-color: white;
+        margin: 4px 0;
+        transition: all 0.4s ease;
+    }
+
+    /* Adjust logo and top bar link styles */
+    .top-bar img.logo {
+        max-width: 40px;
+        margin-right: 15px;
+    }
+
+    .top-bar .top-bar-link, .top-bar .project a {
+        display: none; /* Hide top bar links */
+    }
+
+    /* Display hamburger menu */
+    .hamburger-menu {
+        display: flex;
+    }
+
+    /* Hamburger menu open/close animations */
+    .hamburger-menu.open div:nth-child(1) {
+        transform: rotate(45deg);
+    }
+
+    .hamburger-menu.open div:nth-child(2) {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    .hamburger-menu.open div:nth-child(3) {
+        transform: rotate(-45deg);
     }
 }
