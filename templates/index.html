@@ -20,7 +20,7 @@
 
 <div class="intro-text">
     <h2>In simplicity is beauty.</h2>
-<button id="skills-btn" class="btn skills" style="display: block; margin: 0 auto; width: max-content;">Skills</button>
+<button id="skills-btn" class="btn skills" style="display: block; margin: 0 auto; width: max-content;">Skills / About</button>
 </div>
 
 <div id="skills-section" class="skills-section">
@@ -66,7 +66,8 @@
         <ul>
             <li>I'm passionate about everything I do.</li>
             <li>I learn and work best by starting in the middle.</li>
-            <li>Fast worker.</li>
+            <li>Fast worker, can work on multiple projects simultaneously.</li>
+			<li>Bad at explaining things.</li>
         </ul>
     </div>
 </div>
@@ -94,8 +95,8 @@
     <p>An online interface for pymusiclooper, creates seamlessly loopable versions of songs.</p>
 </div>
 
-<div class="project">
-    <a href="http://soundscapes.ermine.at" class="btn soundscapes">Soundscapes</a>
+<div class="project"  style="display:none;">
+    <a href="http://soundscapes.ermine.at"class="btn soundscapes">Soundscapes</a>
     <p>An organized collection of my own soundscapes.</p>
 </div>
 
@@ -105,13 +106,18 @@
 </div>
 
 <div class="project">
-    <a href="http://art.ermine.at" class="btn art">Digital Art</a>
-    <p>A showcase of my art, featuring graphite fantasy pieces with industrial themes and highly stylized maps of public transport.</p>
+    <a href="http://art.ermine.at" class="btn art">Graphic design - maps</a>
+    <p>Highly stylized public transport maps in several distinctive art styles.</p>
 </div>
 
 <div class="project">
-    <a href="http://graphiteart.ermine.at" class="btn art">Graphite Art</a>
-    <p>A showcase of my art, featuring graphite fantasy pieces with industrial themes and highly stylized maps of public transport.</p>
+    <a href="http://graphiteart.ermine.at" class="btn art">Graphite art</a>
+    <p>Traditional art, featuring graphite fantasy pieces with industrial themes and highly stylized maps of public transport.</p>
+</div>
+
+<div class="project">
+    <a href="http://productart.ermine.at" class="btn art">Product design</a>
+    <p>A showcase of book covers, beer cans, tram signs, etc.</p>
 </div>
 
 </div>
@@ -131,12 +137,14 @@
 
     const projectData = {
         'Stimmungskompass': { bgImage: 'static/bg_stimmungskompass.png', url: 'http://stimmungskompass.ermine.at' },
+		        'Stravaexporter': { bgImage: 'static/bg_stravaexporter.gif', url: 'http://stravaexporter.ermine.at' },
         'Otterguessr': { bgImage: 'static/bg_otterguessr.png', url: 'http://otterguessr.ermine.at' },
         'Songloops': { bgImage: 'static/bg_songloops.png', url: 'http://songloops.ermine.at' },
         'Soundscapes': { bgImage: 'static/bg_soundscapes.png', url: 'http://soundscapes.ermine.at' },
         'Board games': { bgImage: 'static/bg_boardgames.png', url: 'http://boardgames.ermine.at' },
-        'Digital Art': { bgImage: 'static/bg_art.png', url: 'http://art.ermine.at' },
-        'Graphite Art': { bgImage: 'static/bg_graphiteart.png', url: 'http://art.ermine.at' }
+        'Graphic design - maps': { bgImage: 'static/bg_art1.gif', url: 'http://art.ermine.at' },
+        'Graphite art': { bgImage: 'static/bg_graphiteart.gif', url: 'http://graphiteart.ermine.at' },
+		'Product design': { bgImage: 'static/bg_productart.gif', url: 'http://products.ermine.at' }
     };
 
     function isMobileDevice() {
@@ -144,9 +152,41 @@
     }
 
     function movePopup(event, popup) {
-        popup.style.top = (event.pageY + 10) + 'px';
-        popup.style.left = (event.pageX + 10) + 'px';
+        const mouseX = event.clientX;
+        const mouseY = event.clientY;
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        const popupRect = popup.getBoundingClientRect();
+
+        let popupX = mouseX + 10; // Basic X position
+        let popupY = mouseY + 10; // Basic Y position
+
+        // Adjust X position if popup goes beyond the right edge
+        if (mouseX + popupRect.width + 10 > viewportWidth) {
+            popupX = viewportWidth - popupRect.width - 10;
+        }
+
+        // Adjust Y position if popup goes beyond the bottom edge
+        if (mouseY + popupRect.height + 10 > viewportHeight) {
+            popupY = viewportHeight - popupRect.height - 10;
+        }
+
+        // Set the final position of the popup
+        popup.style.left = popupX + 'px';
+        popup.style.top = popupY + 'px';
     }
+
+    document.querySelectorAll('.project').forEach(project => {
+        const popup = document.createElement('img');
+        popup.style.position = 'absolute';
+        popup.style.maxWidth = '500px';
+        popup.style.maxHeight = '80vh'; // Ensure popup fits within viewport height
+        popup.style.display = 'none';
+		popup.style.borderRadius = '30px';
+        popup.style.pointerEvents = 'none';
+        popup.style.zIndex = '1001';
+        document.body.appendChild(popup);
+    });
 
     let notification; // Global reference to the notification
 
@@ -155,6 +195,7 @@
         notification.textContent = 'Click for the full version!';
         notification.style.position = 'absolute';
         notification.style.top = '120px';
+		notification.style.display = 'none';
         notification.style.left = '50%';
         notification.style.transform = 'translateX(-50%)';
         notification.style.backgroundColor = 'white';
