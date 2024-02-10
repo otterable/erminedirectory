@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ermine.at - Kunst</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script>
+        $(document).ready(function(){
+            // Toggle categories and update image container layout
+            $('.art-category-button').click(function(){
+                $('.art-category-button').removeClass('toggled');
+                $(this).addClass('toggled');
+                var category = $(this).attr('data-category');
+                $('.image-container').each(function(){
+                    if (category === 'all' || $(this).hasClass(category)) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            });
+
+            // Change images per row based on selection
+            $('#layout-select').change(function() {
+                var selection = $(this).val();
+                $('#all-art').removeClass().addClass('layout-' + selection);
+            });
+
+            var cursor = $('#custom-cursor');
+
+            $(document).mousemove(function(e) {
+        // Update cursor position directly without offset
+        cursor.css({
+            left: e.pageX + 'px',
+            top: e.pageY + 'px'
+        });
+    });
+
+            $(document).mousedown(function() {
+                cursor.animate({
+                    width: '35px',
+                    height: '35px',
+                    opacity: 0.8
+                }, 100, "swing");
+            });
+
+            $(document).mouseup(function() {
+                cursor.animate({
+                    width: '25px',
+                    height: '25px',
+                    opacity: 1
+                }, 100, "swing");
+            });
+        });
+    </script>
+	
+	<script>
+$(document).ready(function() {
+    // Open overlay on image click
+    $('.image-container img').click(function() {
+        const src = $(this).attr('src');
+        $('#overlay-image').attr('src', src);
+        $('#image-overlay').fadeIn();
+    });
+
+    // Close overlay when clicking on the overlay outside the image
+    $('#image-overlay').click(function(e) {
+        if (!$(e.target).is('#overlay-image')) {
+            $('#image-overlay').fadeOut();
+        }
+    });
+
+    // Close overlay on X button click
+    $('#close-overlay').click(function() {
+        $('#image-overlay').fadeOut();
+    });
+});
+</script>
+
+
+</head>
+<body>
+
+<div id="image-overlay" style="display:none;">
+    <span id="close-overlay" style="position: absolute; top: 20px; right: 30px; font-size: 30px; cursor: pointer;">&times;</span>
+    <img id="overlay-image" src="" alt="Full screen overlay image" style="max-width: 100%; max-height: 100%; margin: auto; display: block; position: absolute; top: 0; left: 0; bottom: 0; right: 0;">
+</div>
+
+
+
+<div class="top-bar">
+    <a href="{{ url_for('index') }}">
+        <img src="{{ url_for('static', filename='erminelogo.png') }}" class="logo" alt="Logo">
+    </a>
+</div>
+
+
+
+<div id="button-container">
+    <select id="layout-select">
+        <option value="3">3 per row</option>
+        <option value="1">1 per row</option>
+        <option value="2">2 per row</option>
+        <option value="4">4 per row</option>
+        <option value="5">5 per row</option>
+    </select>
+    <a href="{{ url_for('portfolio', category='all') }}" class="art-category-button {{'toggled' if selected_category == 'all' else ''}}">All</a>
+    {% for category in art_categories %}
+        <a href="{{ url_for('portfolio', category=category) }}" class="art-category-button {{'toggled' if selected_category == category else ''}}">{{ category }}</a>
+    {% endfor %}
+</div>
+
+
+<div id="content">
+    <div id="all-art" class="layout-3">
+     {% for image in images %}
+    <div class="image-container {{ image.category }}">
+        <img src="{{ url_for('static', filename='art/' + image.category + '/' + image.filename) }}" alt="{{ image.filename }}">
+        <div class="audio-info">
+            <!-- Updated line below to hide numeric prefix from image description -->
+            <p>{{ image.filename.split('.')[0] | regex_replace("^\\d+\\s+", "") }}</p>
+        </div>
+    </div>
+{% endfor %}
+        <div style="clear: both;"></div>
+    </div>
+</div>
+</body>
+</html>

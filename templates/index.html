@@ -101,18 +101,18 @@
 </div>
 
 <div class="project">
-    <a href="https://vdesign.ermine.at" class="btn art">Graphic design - maps</a>
+    <a href="/portfolio/Map%20design/" class="btn art">Map design</a>
     <p>Highly stylized public transport maps in several distinctive art styles.</p>
 </div>
 
 <div class="project">
-    <a href="https://graphitedesign.ermine.at" class="btn art">Graphite art</a>
+    <a href="/portfolio/Graphite%20art/" class="btn art">Graphite art</a>
     <p>Traditional art, featuring graphite fantasy pieces with industrial themes and highly stylized maps of public transport.</p>
 </div>
 
 <div class="project">
-    <a href="https://productdesign.ermine.at" class="btn art">Product design</a>
-    <p>A showcase of book covers, beer cans, tram signs, etc.</p>
+    <a href="/portfolio/" class="btn art">Graphic design</a>
+    <p>A showcase of book covers, beer cans, tram signs, posters, etc.</p>
 </div>
 
 </div>
@@ -122,218 +122,105 @@
 
 </div>
 
+
 <script>
-    const container = document.querySelector('.container');
-    const projectGrid = document.getElementById('project-grid');
-    const projectIframe = document.getElementById('project-iframe');
-    const bodyStyle = document.body.style;
-    const header = document.querySelector('.header');
-    const logo = header.querySelector('img');
-
-    const projectData = {
-        'Stimmungskompass': { bgImage: 'static/bg_stimmungskompass.png', url: 'https://stimmungskompass.at' },
-		        'Stravaexporter': { bgImage: 'static/bg_stravaexporter.gif', url: 'https://stravaexporter.ermine.at' },
-        'Otterguessr': { bgImage: 'static/bg_otterguessr.png', url: 'https://otterguessr.ermine.at' },
-        'Songloops': { bgImage: 'static/bg_songloops.png', url: 'https://songloops.ermine.at' },
-        'Soundscapes': { bgImage: 'static/bg_soundscapes.png', url: 'https://soundscapes.ermine.at' },
-        'Board games': { bgImage: 'static/bg_boardgames.png', url: 'https://cuteotter.eu' },
-        'Graphic design - maps': { bgImage: 'static/bg_art1.gif', url: 'https://art.ermine.at' },
-        'Graphite art': { bgImage: 'static/bg_graphiteart.gif', url: 'https://graphiteart.ermine.at' },
-		'Product design': { bgImage: 'static/bg_productart.gif', url: 'https://products.ermine.at' }
-    };
-
-    function isMobileDevice() {
-        return (window.innerWidth <= 768);
-    }
-
-    function movePopup(event, popup) {
-        const mouseX = event.clientX;
-        const mouseY = event.clientY;
-        const viewportWidth = window.innerWidth;
-        const viewportHeight = window.innerHeight;
-        const popupRect = popup.getBoundingClientRect();
-
-        let popupX = mouseX + 10; // Basic X position
-        let popupY = mouseY + 10; // Basic Y position
-
-        // Adjust X position if popup goes beyond the right edge
-        if (mouseX + popupRect.width + 10 > viewportWidth) {
-            popupX = viewportWidth - popupRect.width - 10;
-        }
-
-        // Adjust Y position if popup goes beyond the bottom edge
-        if (mouseY + popupRect.height + 10 > viewportHeight) {
-            popupY = viewportHeight - popupRect.height - 10;
-        }
-
-        // Set the final position of the popup
-        popup.style.left = popupX + 'px';
-        popup.style.top = popupY + 'px';
-    }
-
-    document.querySelectorAll('.project').forEach(project => {
-        const popup = document.createElement('img');
-        popup.style.position = 'absolute';
-        popup.style.maxWidth = '500px';
-        popup.style.maxHeight = '80vh'; // Ensure popup fits within viewport height
-        popup.style.display = 'none';
-		popup.style.borderRadius = '30px';
-        popup.style.pointerEvents = 'none';
-        popup.style.zIndex = '1001';
-        document.body.appendChild(popup);
-    });
-
-    let notification; // Global reference to the notification
-
-    function createNotification(projectName) {
-        notification = document.createElement('div');
-        notification.textContent = 'Click for the full version!';
-        notification.style.position = 'absolute';
-        notification.style.top = '120px';
-		notification.style.display = 'none';
-        notification.style.left = '50%';
-        notification.style.transform = 'translateX(-50%)';
-        notification.style.backgroundColor = 'white';
-        notification.style.color = 'black';
-        notification.style.padding = '10px';
-        notification.style.borderRadius = '30px';
-        notification.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)';
-        notification.style.border = '1px solid black';
-        notification.style.cursor = 'pointer';
-        notification.style.zIndex = '1002';
-        notification.style.opacity = '0';
-        notification.style.transition = 'opacity 0.5s';
-
-        notification.addEventListener('click', () => {
-            window.open(projectData[projectName].url, '_blank');
-            notification.remove();
-            notification = null; // Reset the global notification reference
+document.addEventListener('DOMContentLoaded', function() {
+    var skillsBtn = document.getElementById('skills-btn');
+    if (skillsBtn) {
+        skillsBtn.addEventListener('click', function() {
+            var skillsSection = document.getElementById('skills-section');
+            skillsSection.style.display = skillsSection.style.display === 'block' ? 'none' : 'block';
         });
-
-        setTimeout(() => {
-            notification.style.opacity = '1';
-        }, 100);
-
-        return notification;
     }
 
-    function addNotificationToProject(projectName) {
-        const existingNotification = container.querySelector('.notification');
-        if (!existingNotification) {
-            createNotification(projectName);
-            container.appendChild(notification); // Add new notification
+    // Function to setup or remove project hover effects
+    function setupProjectHover() {
+        const isDesktop = window.innerWidth > 1080;
+        const projects = document.querySelectorAll('.project');
 
-            setTimeout(() => {
-                if(notification){
-                    notification.remove();
-                    notification = null; // Reset the global notification reference
+        projects.forEach(project => {
+            if (isDesktop) {
+                if (!project.hasPopupEvent) {
+                    addPopupEvent(project);
+                    project.hasPopupEvent = true; // Mark the project to avoid adding events multiple times
                 }
-            }, 5000); // Auto-hide after 5 seconds
-        }
-    }
-
-    document.querySelectorAll('.project').forEach(project => {
-        const popup = document.createElement('img');
-        popup.style.position = 'absolute';
-        popup.style.maxWidth = '500px';
-        popup.style.display = 'none';
-        popup.style.pointerEvents = 'none';
-        popup.style.zIndex = '1001';
-        document.body.appendChild(popup);
-
-        project.addEventListener('mouseenter', (event) => {
-            if (!isMobileDevice()) {
-                const imageName = projectData[project.querySelector('a').textContent.trim()]?.bgImage;
-                if (imageName) {
-                    popup.src = imageName;
-                    popup.style.display = 'block';
-                    movePopup(event, popup);
-                }
+            } else {
+                // Optional: Handle mobile-specific behavior or cleanup if necessary
             }
         });
+    }
 
-        project.addEventListener('mousemove', (event) => {
-            if (!isMobileDevice()) {
+    // Function to add popup events to projects
+    function addPopupEvent(project) {
+        const popup = document.createElement('img');
+        popup.style.position = 'absolute';
+        popup.style.maxWidth = '500px';
+        popup.style.maxHeight = '400px';
+        popup.style.display = 'none';
+        popup.style.pointerEvents = 'none';
+        popup.style.zIndex = '1001';
+        document.body.appendChild(popup);
+
+        project.addEventListener('mouseenter', function(event) {
+            const projectName = project.querySelector('a').textContent.trim();
+            const projectData = {
+                'Stimmungskompass': 'static/bg_stimmungskompass.png',
+                'Stravaexporter': 'static/bg_stravaexporter.gif',
+                'Otterguessr': 'static/bg_otterguessr.png',
+                'Songloops': 'static/bg_songloops.png',
+                'Graphite art': 'static/bg_graphiteart.gif',
+                'Graphic design': 'static/bg_digitalart.gif',
+                'Map design': 'static/bg_art1.gif',
+                'Board games': 'static/bg_boardgames.png'
+                // Add other projects as needed
+            };
+            
+            const imageName = projectData[projectName];
+            if (imageName) {
+                popup.src = imageName;
+                popup.style.display = 'block';
                 movePopup(event, popup);
             }
         });
 
-        project.addEventListener('mouseleave', () => {
-            popup.style.display = 'none';
+        project.addEventListener('mousemove', function(event) {
+            movePopup(event, popup);
         });
 
-        project.addEventListener('click', (event) => {
-            event.preventDefault();
+        project.addEventListener('mouseleave', function() {
             popup.style.display = 'none';
-
-            const projectName = project.querySelector('a').textContent.trim();
-            const { bgColor, bgImage, textColor } = projectData[projectName] || {};
-
-            const topBar = document.createElement('div');
-            topBar.classList.add('top-bar');
-            topBar.style.backgroundColor = bgColor;
-
-            if (logo) {
-                const logoClone = logo.cloneNode(true);
-                logoClone.style.maxWidth = '80px';
-                logoClone.style.maxHeight = '80px';
-                topBar.appendChild(logoClone);
-
-                logoClone.addEventListener('click', () => {
-                    header.style.display = 'block';
-                    container.removeChild(topBar);
-                    projectGrid.style.display = 'grid';
-                    projectIframe.style.display = 'none';
-                    bodyStyle.paddingTop = '0';
-                    bodyStyle.overflow = 'auto';
-                    container.style.maxWidth = '1200px';
-                });
-
-                header.style.display = 'none';
-            }
-
-            document.querySelectorAll('.project').forEach(p => {
-                const projectLink = p.querySelector('a').cloneNode(true);
-                projectLink.classList.remove('btn');
-                projectLink.classList.add('top-bar-link');
-                projectLink.removeAttribute('href');
-                projectLink.addEventListener('click', () => {
-                    projectIframe.src = p.querySelector('a').href;
-                    addNotificationToProject(p.querySelector('a').textContent.trim());
-                });
-                topBar.appendChild(projectLink);
-            });
-
-            container.insertBefore(topBar, projectGrid);
-            projectGrid.style.display = 'none';
-
-            container.style.maxWidth = 'none';
-            container.style.width = '100%';
-            container.style.padding = '0';
-            projectIframe.src = event.currentTarget.querySelector('a').href;
-            projectIframe.style.display = 'block';
-            projectIframe.style.width = '90%';
-            projectIframe.style.height = `calc(100vh - ${topBar.offsetHeight + 20}px - 20px)`;
-            projectIframe.style.position = 'absolute';
-            projectIframe.style.top = `calc(${topBar.offsetHeight + 20}px)`;
-            projectIframe.style.left = '5%';
-            projectIframe.style.borderRadius = '30px';
-            projectIframe.style.marginBottom = '10px';
-
-            bodyStyle.margin = '0';
-            bodyStyle.paddingTop = topBar.offsetHeight + 'px';
-            bodyStyle.overflow = 'hidden';
-
-            addNotificationToProject(projectName); // Add notification for specific projects
         });
-    });
+    }
 
-    document.getElementById('skills-btn').addEventListener('click', function() {
-        var skillsSection = document.getElementById('skills-section');
-        skillsSection.style.display = skillsSection.style.display === 'block' ? 'none' : 'block';
-    });
+    // Function to move the popup
+    function movePopup(event, popup) {
+        const mouseX = event.clientX;
+        const mouseY = event.clientY;
+        const popupRect = popup.getBoundingClientRect();
+        let popupX = mouseX + 20;
+        let popupY = mouseY + 20;
+
+        // Adjust if popup goes beyond right edge
+        if (mouseX + popupRect.width + 20 > window.innerWidth) {
+            popupX = mouseX - popupRect.width - 20;
+        }
+
+        // Adjust if popup goes beyond bottom edge
+        if (mouseY + popupRect.height + 20 > window.innerHeight) {
+            popupY = mouseY - popupRect.height - 20;
+        }
+
+        popup.style.left = `${popupX}px`;
+        popup.style.top = `${popupY}px`;
+    }
+
+    // Initial setup
+    setupProjectHover();
+
+    // Re-setup on window resize
+    window.addEventListener('resize', setupProjectHover);
+});
 </script>
-
 
 
 </body>
