@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ermine projects</title>
-    <link href="httpss://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 	
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -134,91 +134,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Function to setup or remove project hover effects
-    function setupProjectHover() {
-        const isDesktop = window.innerWidth > 1080;
-        const projects = document.querySelectorAll('.project');
-
-        projects.forEach(project => {
-            if (isDesktop) {
-                if (!project.hasPopupEvent) {
-                    addPopupEvent(project);
-                    project.hasPopupEvent = true; // Mark the project to avoid adding events multiple times
-                }
-            } else {
-                // Optional: Handle mobile-specific behavior or cleanup if necessary
-            }
-        });
-    }
+ 
 
     // Function to add popup events to projects
-    function addPopupEvent(project) {
-        const popup = document.createElement('img');
-        popup.style.position = 'absolute';
-        popup.style.maxWidth = '500px';
-        popup.style.maxHeight = '400px';
-        popup.style.display = 'none';
-        popup.style.pointerEvents = 'none';
-        popup.style.zIndex = '1001';
-        document.body.appendChild(popup);
-
-        project.addEventListener('mouseenter', function(event) {
-            const projectName = project.querySelector('a').textContent.trim();
-            const projectData = {
-                'Stimmungskompass': 'static/bg_stimmungskompass.png',
-                'Stravaexporter': 'static/bg_stravaexporter.gif',
-                'Otterguessr': 'static/bg_otterguessr.png',
-                'Songloops': 'static/bg_songloops.png',
-                'Graphite art': 'static/bg_graphiteart.gif',
-                'Graphic design': 'static/bg_digitalart.gif',
-                'Map design': 'static/bg_art1.gif',
-                'Board games': 'static/bg_boardgames.png'
-                // Add other projects as needed
-            };
-            
-            const imageName = projectData[projectName];
-            if (imageName) {
-                popup.src = imageName;
-                popup.style.display = 'block';
-                movePopup(event, popup);
-            }
-        });
-
-        project.addEventListener('mousemove', function(event) {
-            movePopup(event, popup);
-        });
-
-        project.addEventListener('mouseleave', function() {
-            popup.style.display = 'none';
-        });
-    }
 
     // Function to move the popup
-    function movePopup(event, popup) {
-        const mouseX = event.clientX;
-        const mouseY = event.clientY;
-        const popupRect = popup.getBoundingClientRect();
-        let popupX = mouseX + 20;
-        let popupY = mouseY + 20;
-
-        // Adjust if popup goes beyond right edge
-        if (mouseX + popupRect.width + 20 > window.innerWidth) {
-            popupX = mouseX - popupRect.width - 20;
-        }
-
-        // Adjust if popup goes beyond bottom edge
-        if (mouseY + popupRect.height + 20 > window.innerHeight) {
-            popupY = mouseY - popupRect.height - 20;
-        }
-
-        popup.style.left = `${popupX}px`;
-        popup.style.top = `${popupY}px`;
-    }
+  
 
     // Initial setup
-    setupProjectHover();
 
     // Re-setup on window resize
-    window.addEventListener('resize', setupProjectHover);
 });
 </script>
 
