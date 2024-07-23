@@ -273,7 +273,7 @@ h1 {
     background-color: #003056; /* Updated button color */
 }
 
-.stimmungskompass, .otterguessr, .songloops, .soundscapes, .boardgames, .art, .skills {
+.stimmungskompass, .otterguessr, .songloops, .soundscapes, .boardgames, .art, .skills, .fundamt, .traveltrail {
     background-color: #ffffff; /* Harmonize project button colors */
 }
 
@@ -281,6 +281,7 @@ h1 {
     transform: translateY(-3px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
+
 
 .btn:active {
     background-color: #000000; /* Darker shade for button press effect */
